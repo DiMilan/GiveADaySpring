@@ -21,9 +21,9 @@ $v-background-color: #508590;
 //$v-shadow-opacity: 5%;
 
 // Defines colors for indicating status (focus, success, failure)
-//$v-focus-color: valo-focus-color(); // Calculates a suitable color automatically
-//$v-friendly-color: #2c9720;
-//$v-error-indicator-color: #ed473b;
+$v-focus-color: #63B1BC; // Calculates a suitable color automatically
+$v-friendly-color: #34B78F;
+$v-error-indicator-color: #E73C3E;
 
 // For more information, see: https://vaadin.com/book/-/page/themes.valo.html
 // Example variants can be copy/pasted from https://vaadin.com/wiki/-/wiki/Main/Valo+Examples

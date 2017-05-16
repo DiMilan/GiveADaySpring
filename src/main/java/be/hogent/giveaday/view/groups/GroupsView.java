@@ -1,4 +1,4 @@
-package be.hogent.giveaday.view;
+package be.hogent.giveaday.view.groups;
 
 import be.hogent.giveaday.model.DomainController;
 import com.vaadin.navigator.View;
@@ -9,10 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
 
-@SpringView(name = GroupView.VIEW_NAME)
-public class GroupView extends VerticalLayout implements View {
+@SpringView(name = GroupsView.VIEW_NAME)
+public class GroupsView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "group";
+    public static final String VIEW_NAME = "groups";
 
     @Autowired
     private DomainController domainController;
