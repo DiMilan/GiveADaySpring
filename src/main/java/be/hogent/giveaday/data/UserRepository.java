@@ -1,6 +1,6 @@
 package be.hogent.giveaday.data;
 
-import model.User;
+import be.hogent.giveaday.model.User;
 
 /**
  * User repository

@@ -1,6 +1,6 @@
 package be.hogent.giveaday.data;
 
-import model.Group;
+import be.hogent.giveaday.model.Group;
 
 /**
  * Group repository
