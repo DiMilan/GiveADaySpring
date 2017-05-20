@@ -59,9 +59,9 @@ public class GoedBezigUI extends UI implements ViewDisplay {
         header.setExpandRatio(navigation, 1.0f);
 
         logoutButton = new Button("Logout");
-
         logoutButton.addClickListener(clickEvent -> {
             domainController.logout();
+
             showView(LoginView.VIEW_NAME);
         });
 
