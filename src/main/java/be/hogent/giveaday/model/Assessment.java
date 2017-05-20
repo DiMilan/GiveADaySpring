@@ -23,6 +23,9 @@ public class Assessment {
     @Column(name = "Assessment")
     private String assessmentContent;
 
+    // KLasse en datamodel nog aan te passen naar model met vragen maar
+    // waar vinden we de vragen?
+    // ook kunnen we hiervoor geen typeform gebruiken?
 
     public String getSourceUser() {
         return sourceUser;
