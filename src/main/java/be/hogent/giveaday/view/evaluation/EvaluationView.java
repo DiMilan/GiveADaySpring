@@ -16,7 +16,7 @@ import javax.annotation.PostConstruct;
 @SpringView(name = EvaluationView.VIEW_NAME)
 public class EvaluationView extends VerticalLayout implements View {
 
-    public static final String VIEW_NAME = "evaluation";
+    public static final String VIEW_NAME = "";
 
     @Autowired
     private DomainController domainController;
