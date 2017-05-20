@@ -41,72 +41,12 @@ public class Group {
 
     @Column(name = "GroupState")
     private int stateType;
-    @ManyToOne
-    @JoinColumn(name = "GbOrganizationOrgId")
-    private GbOrganization gbOrganization;
-    @OneToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "ExternalOrganizationOrgId")
-    private ExternalOrganization externalOrganization;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private List<Invitation> invitations;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private List<Activity> activities;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private List<Task> taskList;
-
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private List<History> history;
-    //mapping om events op te halen
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
-    private List<Event> events;
-
 
     @Column(name = "Feedback")
     private String feedback;
 
-    public GroupState getGroupState() {
-        switch (stateType) {
-            case 0:
-                return new MotivationOpenState(this);
-            case 1:
-                return new MotivationSubmittedState(this);
-            case 2:
-                return new MotivationDeclinedState(this);
-            case 3:
-                return new MotivationApprovedState(this);
-            case 4:
-                return new GBLabelAccepted(this);
-            case 5:
-                return new MotivationApprovedState(this);
-            case 6:
-                return new EventsApprovedState(this);
-            default:
-                return null;
-        }
-    }
 
-    public void setGroupState(GroupState groupState) throws GroupStateException {
-        if (groupState.getClass() == MotivationOpenState.class) {
-            setStateType(0);
-        } else if (groupState.getClass() == MotivationSubmittedState.class) {
-            setStateType(1);
-        } else if (groupState.getClass() == MotivationDeclinedState.class) {
-            setStateType(2);
-        } else if (groupState.getClass() == MotivationApprovedState.class) {
-            setStateType(3);
-        } else if (groupState.getClass() == GBLabelAccepted.class) {
-            setStateType(4);
-        } else if (groupState.getClass() == MotivationApprovedState.class) {
-            setStateType(5);
-        } else if (groupState.getClass() == EventsApprovedState.class) {
-            setStateType(6);
-        } else {
-            throw new GroupStateException("Could not map state");
-        }
-    }
+
 
     public int getStateType() {
         return stateType;
@@ -212,138 +152,17 @@ public class Group {
         this.companyContactTitle = companyContactTitle;
     }
 
-    public GbOrganization getGbOrganization() {
-        return gbOrganization;
-    }
-
-    void setGbOrganization(GbOrganization gbOrganization) {
-        this.gbOrganization = gbOrganization;
-    }
-
-    public ExternalOrganization getExternalOrganization() {
-        return externalOrganization;
-    }
-
-    void setExternalOrganization(ExternalOrganization externalOrganization) {
-        this.externalOrganization = externalOrganization;
-    }
-
-    public List<Invitation> getInvitations() {
-        return invitations;
-    }
-
-    void setInvitations(List<Invitation> invitations) {
-        this.invitations = invitations;
-    }
-
-    private List<User> getUsers() {
-        return invitations.stream()
-                .filter(Invitation::isAccepted)
-                .map(Invitation::getUser)
-                .collect(Collectors.toList());
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    void setActivities(List<Activity> activities) {
-        this.activities = activities;
-    }
-
-    // getter om de history van een groep op te halen
-    public List<History> getHistory() {
-        return history;
-    }
-    // getter om events op te halen
-    public List<Event> getEvents() {
-        return events;
-    }
-    public List<Task> getTaskList() {
-        return taskList;
-    }
-
-    void setTaskList(List<Task> taskList) {
-        this.taskList = taskList;
-    }
-
     public String getFeedback() {
         return feedback;
     }
 
-    void setFeedback(FeedbackDecision decision, String feedback) throws Exception {
-        if (decision != null) {
-            switch (decision) {
-                case APPROVED:
-                    getGroupState().approve();
-                    break;
-                case DECLINED:
-                    getGroupState().decline();
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid decision " + decision);
-            }
-        }
 
-        this.feedback = feedback;
-
-        //Milan stukje history
-        History newHistory = new History();
-        newHistory.setGroup(this);
-        newHistory.setFeedback(feedback);
-        newHistory.setTimestamp(new Date());
-
-        if (decision != null) {
-            switch (decision) {
-                case APPROVED:
-                    newHistory.setDecision(1);
-                    break;
-                case DECLINED:
-                    newHistory.setDecision(0);
-                    break;
-                default:
-                    throw new IllegalArgumentException("Invalid decision " + decision);
-            }
-        } else {
-            newHistory.setDecision(-1);
-        }
-
-        String contentString = "Motivation: "+ motivation
-                + "\n" + " Events: "  +  events+toString()
-                + "\n" + " Activities: "  +  activities+toString();
-
-        newHistory.setContent(contentString);
-        history.add(newHistory);
-    }
 
     @Override
     public String toString() {
         return "Group [name=" + groupName + "]";
     }
 
-    public String getDetails() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("GroupName: ").append(groupName);
-        sb.append("\nGroup Members: ");
-        if (getUsers().isEmpty()) {
-            sb.append("no members assigned");
-        } else {
-            for (User member : getUsers()) {
-                sb.append(member.getUserName()).append(" ");
-            }
-        }
-        sb.append("\nGroup Motivation: ");
-        sb.append(motivation);
-        sb.append("\nState: ");
-        sb.append(getGroupState().getClass().getSimpleName());
-        return sb.toString();
-    }
 
-    public boolean IsEventListApproved() {
-        return this.getGroupState().IsEventListApproved();
-    }
 
-    public boolean IsMotivationClosed() {
-        return this.getGroupState().IsMotivationClosed();
-    }
-}
+   }

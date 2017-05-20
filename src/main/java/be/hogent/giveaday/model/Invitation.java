@@ -4,7 +4,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_groups")
-@IdClass(InvitationId.class)
 public class Invitation {
 
     @Id
@@ -22,8 +21,6 @@ public class Invitation {
     @PrimaryKeyJoinColumn(name = "GroupId", referencedColumnName = "GroupName")
     private Group group;
 
-    @Column(name = "Status")
-    private InvitationStatus status;
 
     public Invitation() {
     }
@@ -36,19 +33,5 @@ public class Invitation {
         return group;
     }
 
-    public InvitationStatus getStatus() {
-        return status;
-    }
 
-    boolean isPending() {
-        return InvitationStatus.PENDING.equals(status);
-    }
-
-    boolean isAccepted() {
-        return InvitationStatus.ACCEPTED.equals(status);
-    }
-
-    boolean isDeclined() {
-        return InvitationStatus.DECLINED.equals(status);
-    }
 }

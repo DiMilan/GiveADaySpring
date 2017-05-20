@@ -25,19 +25,19 @@ public class User {
     private String passwordHash;
     @OneToMany(mappedBy = "user")
     private List<Invitation> invitations;
-    @ManyToOne
-    @JoinColumn(name = "OrganizationOrgId")
-    private GbOrganization organization;
+    //@ManyToOne
+    //@JoinColumn(name = "OrganizationOrgId")
+    //private GbOrganization organization;
     @ManyToOne
     @JoinColumn(name = "LectorUserId")
     private User lectorUser;
     @OneToMany(mappedBy = "lectorUser")
     private List<User> students;
 
-    @ManyToMany(mappedBy = "users")
-    @JoinTable(name = "ActivityTaskUser")
-    @JoinColumn(name = "Id")
-    private List<Task> tasks;
+    //@ManyToMany(mappedBy = "users")
+    //@JoinTable(name = "ActivityTaskUser")
+    //@JoinColumn(name = "Id")
+    //private List<Task> tasks;
 
     public String getId() {
         return id;
@@ -49,15 +49,15 @@ public class User {
 
     public Group getGroup() {
         return invitations.stream()
-                .filter(Invitation::isAccepted)
+               // .filter(Invitation::isAccepted)
                 .map(Invitation::getGroup)
                 .findFirst()
                 .orElse(null);
     }
 
-    public GbOrganization getOrganization() {
-        return organization;
-    }
+    //public GbOrganization getOrganization() {
+    //    return organization;
+    //}
 
     String getPasswordHash() {
         return passwordHash;
