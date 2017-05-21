@@ -1,9 +1,6 @@
 package be.hogent.giveaday.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Created by Milan on 18/05/2017.
@@ -14,12 +11,24 @@ import javax.persistence.Table;
 public class Assessment {
 
     @Id
+    @Column(name="id")
+    private int id;
+
     @Column(name = "GroupNaam")
-    private String groupName;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name = "GroupNaam", referencedColumnName = "GroupName")
+    private Group groupName;
+
     @Column(name = "SourceUser")
-    private String sourceUser;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="SourceUser", referencedColumnName = "user_id")
+    private User sourceUser;
+
     @Column(name = "TargetUser")
-    private String targetUser;
+    @ManyToOne(cascade = CascadeType.PERSIST)
+    @JoinColumn(name="TargetUser", referencedColumnName = "user_id")
+    private User targetUser;
+
     @Column(name = "Comment")
     private String comment;
     @Column(name = "Vraag1")
@@ -35,15 +44,15 @@ public class Assessment {
     @Column(name = "Vraag6")
     private int vraag6;
 
-    public String getSourceUser() {
+    public User getSourceUser() {
         return sourceUser;
     }
-    private void setSourceUser(String sourceUser){ this.sourceUser = sourceUser;}
+    private void setSourceUser(User sourceUser){ this.sourceUser = sourceUser;}
 
-    public String getTargetUser() {
+    public User getTargetUser() {
         return targetUser;
     }
-    private void setTargetUser(String targetUser){ this.targetUser = targetUser;}
+    private void setTargetUser(User targetUser){ this.targetUser = targetUser;}
 
     public String getComment() {
         return comment;
