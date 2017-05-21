@@ -34,6 +34,10 @@ public class User {
     @OneToMany(mappedBy = "lectorUser")
     private List<User> students;
 
+    //constructor because hibernate
+    public User() {
+    }
+
     //@ManyToMany(mappedBy = "users")
     //@JoinTable(name = "ActivityTaskUser")
     //@JoinColumn(name = "Id")
