@@ -57,11 +57,10 @@ public class Assessment {
 
     public String getVraag1() {return vraag1;}
     private void setVraag1(String vraag1){ this.vraag1 = vraag1;}
-
     public String getVraag2() {return vraag2;}
     private void setVraag2(String vraag2){ this.vraag2 = vraag2;}
     public String getVraag3() {return vraag3;}
-    private void setVraag3(String vraag1){ this.vraag3 = vraag3;}
+    private void setVraag3(String vraag3){ this.vraag3 = vraag3;}
     public String getVraag4() {return vraag4;}
     private void setVraag4(String vraag4){ this.vraag4 = vraag4;}
     public String getVraag5() {return vraag5;}
