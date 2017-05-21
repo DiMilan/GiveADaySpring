@@ -2,6 +2,9 @@ package be.hogent.giveaday.model;
 
 import be.hogent.giveaday.data.GroupRepository;
 import be.hogent.giveaday.data.UserRepository;
+import com.sun.java.browser.plugin2.DOM;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class DomainController {
+    private static final Logger log = LoggerFactory.getLogger(DomainController.class);
 
     @Autowired
     GroupRepository groupRepository;
@@ -24,6 +28,8 @@ public class DomainController {
 
     public User getCurrentUser() {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.getByName(userDetails.getUsername());
+        String username = userDetails.getUsername();
+        log.debug("Retrieving user details (name = {})", username);
+        return userRepository.getByName(username);
     }
 }
