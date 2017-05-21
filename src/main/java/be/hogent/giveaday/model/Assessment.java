@@ -14,17 +14,17 @@ public class Assessment {
     @Column(name="id")
     private int id;
 
-    @Column(name = "GroupNaam")
+//    @Column(name = "GroupNaam")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "GroupNaam", referencedColumnName = "GroupName")
     private Group groupName;
 
-    @Column(name = "SourceUser")
+//    @Column(name = "SourceUser")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="SourceUser", referencedColumnName = "user_id")
     private User sourceUser;
 
-    @Column(name = "TargetUser")
+//    @Column(name = "TargetUser")
     @ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name="TargetUser", referencedColumnName = "user_id")
     private User targetUser;
@@ -32,17 +32,17 @@ public class Assessment {
     @Column(name = "Comment")
     private String comment;
     @Column(name = "Vraag1")
-    private int vraag1;
+    private Integer vraag1;
     @Column(name = "Vraag2")
-    private int vraag2;
+    private Integer vraag2;
     @Column(name = "Vraag3")
-    private int vraag3;
+    private Integer vraag3;
     @Column(name = "Vraag4")
-    private int vraag4;
+    private Integer vraag4;
     @Column(name = "Vraag5")
-    private int vraag5;
+    private Integer vraag5;
     @Column(name = "Vraag6")
-    private int vraag6;
+    private Integer vraag6;
 
     public Group getGroupName(){return groupName;}
     private void setGroupName(Group groupName){this.groupName = groupName;}
@@ -50,29 +50,29 @@ public class Assessment {
     public User getSourceUser() {
         return sourceUser;
     }
-    private void setSourceUser(User sourceUser){ this.sourceUser = sourceUser;}
+    public void setSourceUser(User sourceUser){ this.sourceUser = sourceUser;}
 
     public User getTargetUser() {
         return targetUser;
     }
-    private void setTargetUser(User targetUser){ this.targetUser = targetUser;}
+    public void setTargetUser(User targetUser){ this.targetUser = targetUser;}
 
     public String getComment() {
         return comment;
     }
-    private void setComment(String assessmentContent){ this.comment = assessmentContent;}
+    public void setComment(String assessmentContent){ this.comment = assessmentContent;}
 
-    public int getVraag1() {return vraag1;}
-    private void setVraag1(int vraag1){ this.vraag1 = vraag1;}
-    public int getVraag2() {return vraag2;}
-    private void setVraag2(int vraag2){ this.vraag2 = vraag2;}
-    public int getVraag3() {return vraag3;}
-    private void setVraag3(int vraag3){ this.vraag3 = vraag3;}
-    public int getVraag4() {return vraag4;}
-    private void setVraag4(int vraag4){ this.vraag4 = vraag4;}
-    public int getVraag5() {return vraag5;}
-    private void setVraag5(int vraag5){ this.vraag5 = vraag5;}
-    public int getVraag6() {return vraag6;}
-    private void setVraag6(int vraag6){ this.vraag6 = vraag6;}
+    public Integer getVraag1() {return vraag1;}
+    public void setVraag1(Integer vraag1){ this.vraag1 = vraag1;}
+    public Integer getVraag2() {return vraag2;}
+    public void setVraag2(Integer vraag2){ this.vraag2 = vraag2;}
+    public Integer getVraag3() {return vraag3;}
+    public void setVraag3(Integer vraag3){ this.vraag3 = vraag3;}
+    public Integer getVraag4() {return vraag4;}
+    public void setVraag4(Integer vraag4){ this.vraag4 = vraag4;}
+    public Integer getVraag5() {return vraag5;}
+    public void setVraag5(Integer vraag5){ this.vraag5 = vraag5;}
+    public Integer getVraag6() {return vraag6;}
+    public void setVraag6(Integer vraag6){ this.vraag6 = vraag6;}
 
 }

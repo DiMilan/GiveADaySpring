@@ -70,4 +70,9 @@ public class User {
     public String getName() {
         return String.format("%s %s", firstName, familyName);
     }
+
+    public User(String firstName, String familyName) {
+        this.firstName = firstName;
+        this.familyName = familyName;
+    }
 }
