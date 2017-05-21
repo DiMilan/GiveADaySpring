@@ -38,7 +38,8 @@ public class Group {
     private String companyContactEmail;
     @Column(name = "CompanyContactTitle")
     private String companyContactTitle;
-
+    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
+    private List<Invitation> invitations;
     @Column(name = "GroupState")
     private int stateType;
 
@@ -156,7 +157,20 @@ public class Group {
         return feedback;
     }
 
+    public List<Invitation> getInvitations() {
+        return invitations;
+    }
 
+    void setInvitations(List<Invitation> invitations) {
+        this.invitations = invitations;
+    }
+
+    public List<User> getUsers() {
+        return invitations.stream()
+                .filter(Invitation::isAccepted)
+                .map(Invitation::getUser)
+                .collect(Collectors.toList());
+    }
 
     @Override
     public String toString() {

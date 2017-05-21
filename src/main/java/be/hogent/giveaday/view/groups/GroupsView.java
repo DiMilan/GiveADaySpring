@@ -1,6 +1,9 @@
 package be.hogent.giveaday.view.groups;
 
+import be.hogent.giveaday.component.AssessmentForm;
 import be.hogent.giveaday.model.DomainController;
+import be.hogent.giveaday.model.Group;
+import be.hogent.giveaday.model.User;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -17,8 +20,9 @@ public class GroupsView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "groups";
 
-    private Collection groupMembers;
-
+    private User currentUser =
+    private Group currentGroup = currentUser.getGroup();
+    private Collection<User> groupMembers = currentGroup.getUsers();
 
     @Autowired
     private DomainController domainController;
@@ -29,12 +33,14 @@ public class GroupsView extends VerticalLayout implements View {
 
         setSizeFull();
 
-        for (Iterator iterator = groupMembers.iterator(); iterator.hasNext(); )
+        for (User user : groupMembers )
         {
-        //AssessmentForm form = new AssessmentForm(user);
-        //addComponent(form);
+
+        AssessmentForm form = new AssessmentForm(user);
+        addComponent(form);
+
         //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
-        //
+
 
         }
 
