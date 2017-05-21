@@ -4,6 +4,7 @@ import be.hogent.giveaday.model.DomainController;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,6 +21,11 @@ public class GroupsView extends VerticalLayout implements View {
     @PostConstruct
     private void init() {
         // Init UI here
+
+        setSizeFull();
+        //AssessmentForm form = new AssessmentForm(user);
+        //addComponent(form);
+        //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
     }
 
     @Override
