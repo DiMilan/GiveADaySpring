@@ -1531,6 +1531,97 @@ div.v-layout.v-horizontal.v-widget {
 	vertical-align: top;
 }
 
+.giveaday .err-wrap-container-div, .giveaday .err-wrap-container-div-right, .giveaday .err-wrap-container-div-above, .giveaday .err-wrap-container-div-below {
+	display: table;
+	font-family: FontAwesome;
+}
+
+.giveaday .err-wrap-container-div .msg-div-hidden, .giveaday .err-wrap-container-div-right .msg-div-hidden, .giveaday .err-wrap-container-div-above .msg-div-hidden, .giveaday .err-wrap-container-div-below .msg-div-hidden {
+	display: none;
+}
+
+.giveaday .err-wrap-container-div .msg-div, .giveaday .err-wrap-container-div-right .msg-div, .giveaday .err-wrap-container-div-above .msg-div, .giveaday .err-wrap-container-div-below .msg-div {
+	color: #ed473b !important;
+}
+
+.giveaday .err-wrap-container-div .err-msg-wrapper, .giveaday .err-wrap-container-div-right .err-msg-wrapper, .giveaday .err-wrap-container-div-above .err-msg-wrapper, .giveaday .err-wrap-container-div-below .err-msg-wrapper {
+	display: inline-block;
+}
+
+.giveaday .err-wrap-container-div .err-msg-wrapper div, .giveaday .err-wrap-container-div-right .err-msg-wrapper div, .giveaday .err-wrap-container-div-above .err-msg-wrapper div, .giveaday .err-wrap-container-div-below .err-msg-wrapper div {
+	display: table;
+	padding-top: 5px;
+}
+
+.giveaday .err-wrap-container-div .err-msg-wrapper div:before, .giveaday .err-wrap-container-div-right .err-msg-wrapper div:before, .giveaday .err-wrap-container-div-above .err-msg-wrapper div:before, .giveaday .err-wrap-container-div-below .err-msg-wrapper div:before {
+	content: "\f00d ";
+}
+
+.giveaday .err-form .v-formlayout-error-indicator, .giveaday .err-form-right .v-formlayout-error-indicator, .giveaday .err-form-above .v-formlayout-error-indicator, .giveaday .err-form-below .v-formlayout-error-indicator {
+	display: none;
+}
+
+.giveaday .err-form .v-errorindicator, .giveaday .err-form-right .v-errorindicator, .giveaday .err-form-above .v-errorindicator, .giveaday .err-form-below .v-errorindicator {
+	display: none !important;
+}
+
+.giveaday .err-form .v-formlayout-captioncell, .giveaday .err-form-right .v-formlayout-captioncell, .giveaday .err-form-above .v-formlayout-captioncell, .giveaday .err-form-below .v-formlayout-captioncell {
+	vertical-align: top;
+	padding-top: 5px;
+}
+
+.giveaday .err-form-right .err-wrap-container-div .input-div {
+	display: inline;
+}
+
+.giveaday .err-form-right .err-wrap-container-div .msg-div {
+	display: inline;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+.giveaday .err-form-above .err-wrap-container-div .input-div {
+	display: table-footer-group;
+}
+
+.giveaday .err-form-above .err-wrap-container-div .msg-div {
+	display: table-header-group;
+}
+
+.giveaday .err-form-below .err-wrap-container-div .input-div {
+	display: table-header-group;
+}
+
+.giveaday .err-form-below .err-wrap-container-div .msg-div {
+	display: table-footer-group;
+}
+
+.giveaday .err-wrap-container-div-right .input-div {
+	display: inline;
+}
+
+.giveaday .err-wrap-container-div-right .msg-div {
+	display: inline;
+	vertical-align: top;
+	padding-left: 5px;
+}
+
+.giveaday .err-wrap-container-div-above .input-div {
+	display: table-footer-group;
+}
+
+.giveaday .err-wrap-container-div-above .msg-div {
+	display: table-header-group;
+}
+
+.giveaday .err-wrap-container-div-below .input-div {
+	display: table-header-group;
+}
+
+.giveaday .err-wrap-container-div-below .msg-div {
+	display: table-footer-group;
+}
+
 .giveaday.v-app, .giveaday.v-app-loading {
 	font: 300 16px/1.55 "Open Sans", sans-serif;
 	color: #d0dcde;
