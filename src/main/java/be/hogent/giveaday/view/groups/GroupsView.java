@@ -14,15 +14,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.annotation.PostConstruct;
 import java.util.Iterator;
 import java.util.Collection;
+import org.springframework.security.core.context.SecurityContextHolder;
+//import org.springframework.security.core.userdetails.User;
+
 
 @SpringView(name = GroupsView.VIEW_NAME)
 public class GroupsView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "groups";
 
-    private User currentUser ;
+    private be.hogent.giveaday.model.User currentUser = (be.hogent.giveaday.model.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    //private String name = currentUser.getUsername(); //get logged in username
+
     private Group currentGroup = currentUser.getGroup();
-    private Collection<User> groupMembers = currentGroup.getUsers();
+    private Collection<be.hogent.giveaday.model.User> groupMembers = currentGroup.getUsers();
 
     @Autowired
     private DomainController domainController;
@@ -33,7 +38,7 @@ public class GroupsView extends VerticalLayout implements View {
 
         setSizeFull();
 
-        for (User user : groupMembers )
+        for (be.hogent.giveaday.model.User user : groupMembers )
         {
 
         AssessmentForm form = new AssessmentForm(user);
