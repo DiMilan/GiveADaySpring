@@ -3,9 +3,7 @@ package be.hogent.giveaday.data;
 
 import be.hogent.giveaday.model.Group;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
