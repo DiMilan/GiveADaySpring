@@ -23,7 +23,7 @@ public class User {
 
     @Column(name = "PasswordHash")
     private String passwordHash;
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Invitation> invitations;
     //@ManyToOne
     //@JoinColumn(name = "OrganizationOrgId")
