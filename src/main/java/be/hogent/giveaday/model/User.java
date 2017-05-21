@@ -53,7 +53,7 @@ public class User {
 
     public Group getGroup() {
         return invitations.stream()
-               // .filter(Invitation::isAccepted)
+               .filter(Invitation::isAccepted)
                 .map(Invitation::getGroup)
                 .findFirst()
                 .orElse(null);
