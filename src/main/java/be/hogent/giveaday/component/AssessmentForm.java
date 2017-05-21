@@ -74,4 +74,8 @@ public class AssessmentForm extends FormLayout {
             // todo
         }
     }
+
+    public Assessment getAssessment() {
+        return assessment;
+    }
 }
