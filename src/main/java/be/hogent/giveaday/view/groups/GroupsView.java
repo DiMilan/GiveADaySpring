@@ -20,7 +20,7 @@ public class GroupsView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "groups";
 
-    private User currentUser =
+    private User currentUser ;
     private Group currentGroup = currentUser.getGroup();
     private Collection<User> groupMembers = currentGroup.getUsers();
 
