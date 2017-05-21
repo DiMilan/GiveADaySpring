@@ -30,10 +30,9 @@ public class GroupsView extends VerticalLayout implements View {
     private String name = springUser.getUsername(); //get logged in username
 
     //Hier wordt de user uit de db gehaald op basis van de naam van springUser
-    private be.hogent.giveaday.model.User currentUser ;
-    private Group currentGroup = currentUser.getGroup();
-    private Collection<be.hogent.giveaday.model.User> groupMembers = currentGroup.getUsers();
-
+    private be.hogent.giveaday.model.User currentUser;
+    private Group currentGroup;
+    private Collection<be.hogent.giveaday.model.User> groupMembers;
     @Autowired
     private DomainController domainController;
 
@@ -42,7 +41,9 @@ public class GroupsView extends VerticalLayout implements View {
         // Init UI here
 
         setSizeFull();
-
+        currentUser = domainController.getCurrentUser();
+         currentGroup= currentUser.getGroup();
+         groupMembers= currentGroup.getUsers();
         for (be.hogent.giveaday.model.User user : groupMembers )
         {
 
