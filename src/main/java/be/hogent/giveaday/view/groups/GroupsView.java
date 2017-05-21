@@ -15,6 +15,7 @@ import javax.annotation.PostConstruct;
 import java.util.Iterator;
 import java.util.Collection;
 import org.springframework.security.core.context.SecurityContextHolder;
+
 //import org.springframework.security.core.userdetails.User;
 
 
@@ -23,9 +24,13 @@ public class GroupsView extends VerticalLayout implements View {
 
     public static final String VIEW_NAME = "groups";
 
-    private be.hogent.giveaday.model.User currentUser = (be.hogent.giveaday.model.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    //private String name = currentUser.getUsername(); //get logged in username
+    //hier wordt de ingelogde user opgehaald en in sprinUser gestoken
+    private org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    //naam van springUser wordt opgehaald als String
+    private String name = springUser.getUsername(); //get logged in username
 
+    //Hier wordt de user uit de db gehaald op basis van de naam van springUser
+    private be.hogent.giveaday.model.User currentUser ;
     private Group currentGroup = currentUser.getGroup();
     private Collection<be.hogent.giveaday.model.User> groupMembers = currentGroup.getUsers();
 
