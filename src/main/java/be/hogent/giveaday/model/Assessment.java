@@ -44,6 +44,9 @@ public class Assessment {
     @Column(name = "Vraag6")
     private int vraag6;
 
+    public Group getGroupName(){return groupName;}
+    private void setGroupName(Group groupName){this.groupName = groupName;}
+
     public User getSourceUser() {
         return sourceUser;
     }
