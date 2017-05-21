@@ -1,21 +1,25 @@
 package be.hogent.giveaday.data;
 
 import be.hogent.giveaday.model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 /**
  * User repository implementation
  */
+@Repository
 public class UserRepositoryImpl implements UserRepository {
 
-    private final EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Inject
-    public UserRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public UserRepositoryImpl() {
     }
 
     @Override

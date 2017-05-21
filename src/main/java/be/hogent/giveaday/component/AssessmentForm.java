@@ -4,11 +4,14 @@ import be.hogent.giveaday.model.Assessment;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.User;
 import com.vaadin.data.Binder;
+import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.themes.ValoTheme;
+import org.vaadin.valerrdisp.ValidationErrorDisplay;
+import org.vaadin.valerrdisp.client.ErrorMessagePlacement;
 
 public class AssessmentForm extends FormLayout {
 
@@ -19,7 +22,7 @@ public class AssessmentForm extends FormLayout {
     public static final String QUESTION_5 = "precisie en nauwkeurigheid";
     public static final String QUESTION_6 = "afspraken respecteren";
 
-    private final Binder<Assessment> binder = new Binder<>();
+    private final Binder<Assessment> binder = new Binder<>(Assessment.class);
 
     private final Label user = new Label();
 
@@ -69,10 +72,12 @@ public class AssessmentForm extends FormLayout {
         user.setValue(assessment.getTargetUser().getName());
     }
 
-    public void commit() {
-        if (binder.writeBeanIfValid(assessment)) {
-            // todo
-        }
+    public BinderValidationStatus<Assessment> validate() {
+        return binder.validate();
+    }
+
+    public void commit() throws ValidationException {
+        binder.writeBean(assessment);
     }
 
     public Assessment getAssessment() {

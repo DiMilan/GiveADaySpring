@@ -2,20 +2,23 @@ package be.hogent.giveaday.data;
 
 
 import be.hogent.giveaday.model.Group;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 /**
  * Group repository implementation.
  */
+@Repository
 public class GroupRepositoryImpl implements GroupRepository {
 
-    private final EntityManager entityManager;
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    @Inject
-    public GroupRepositoryImpl(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public GroupRepositoryImpl() {
     }
 
     @Override

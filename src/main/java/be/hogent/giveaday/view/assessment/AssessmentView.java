@@ -5,6 +5,7 @@ import be.hogent.giveaday.component.ScoreField;
 import be.hogent.giveaday.model.Assessment;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.User;
+import com.vaadin.data.ValidationException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -37,6 +38,15 @@ public class AssessmentView extends VerticalLayout implements View {
 
 //        save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 //        cancel.setStyleName(ValoTheme.BUTTON_DANGER);
+
+        save.addClickListener(clickEvent -> {
+            try {
+                form.commit();
+            } catch (ValidationException e) {
+                Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
+            }
+
+        });
 
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
 
