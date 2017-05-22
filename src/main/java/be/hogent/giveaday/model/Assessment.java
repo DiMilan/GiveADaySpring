@@ -16,7 +16,7 @@ public class Assessment {
 
 //    @Column(name = "GroupNaam")
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name = "GroupNaam", referencedColumnName = "GroupName")
+    @JoinColumn(name = "GroupName", referencedColumnName = "GroupName")
     private Group groupName;
 
 //    @Column(name = "SourceUser")
