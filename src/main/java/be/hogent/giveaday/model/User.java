@@ -28,13 +28,13 @@ public class User {
     //@ManyToOne
     //@JoinColumn(name = "OrganizationOrgId")
     //private GbOrganization organization;
-    @ManyToOne
+    @ManyToOnec
     @JoinColumn(name = "LectorUserId")
     private User lectorUser;
     @OneToMany(mappedBy = "lectorUser")
     private List<User> students;
 
-    @OneToMany(mappedBy = "sourceUser")
+    @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER)
     private List<Assessment> assessments;
 
     //constructor because hibernate
