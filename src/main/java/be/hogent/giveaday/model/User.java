@@ -31,7 +31,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "LectorUserId")
     private User lectorUser;
-    @OneToMany(mappedBy = "lectorUser")
+    @OneToMany(mappedBy = "lectorUser", fetch = FetchType.EAGER)
     private List<User> students;
 
     @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -70,7 +70,7 @@ public class User {
         return passwordHash;
     }
 
-    List<User> getStudents() {
+    public List<User> getStudents() {
         return students;
     }
 
