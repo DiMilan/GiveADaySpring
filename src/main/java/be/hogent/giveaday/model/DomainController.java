@@ -32,7 +32,7 @@ public class DomainController {
 
     public void addAssessment(Assessment assessment) {
         getCurrentUser().addAssessments(assessment);
-        //userRepository.update(getCurrentUser());
+        userRepository.update(getCurrentUser());
 
     }
 }

@@ -1,6 +1,7 @@
 package be.hogent.giveaday.data;
 
 import be.hogent.giveaday.model.User;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
@@ -11,13 +12,16 @@ import javax.persistence.TypedQuery;
  * User repository implementation
  */
 @Repository
-public class UserRepositoryImpl implements UserRepository {
+public class UserRepositoryImpl extends SimpleJpaRepository<User, Integer> implements UserRepository {
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public UserRepositoryImpl() {
+
+    public UserRepositoryImpl(EntityManager em) {
+        super(User.class, em);
     }
+
 
     @Override
     public User getByName(String username) {
@@ -27,11 +31,6 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void update(User user){
-
-        entityManager.getTransaction().begin();
-        entityManager.persist(user);
-        entityManager.getTransaction().commit();
-        entityManager.refresh(user);
-
+        save(user);
     }
 }
