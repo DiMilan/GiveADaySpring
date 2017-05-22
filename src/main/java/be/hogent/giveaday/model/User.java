@@ -28,7 +28,7 @@ public class User {
     //@ManyToOne
     //@JoinColumn(name = "OrganizationOrgId")
     //private GbOrganization organization;
-    @ManyToOnec
+    @ManyToOne
     @JoinColumn(name = "LectorUserId")
     private User lectorUser;
     @OneToMany(mappedBy = "lectorUser")
