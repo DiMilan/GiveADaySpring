@@ -14,6 +14,10 @@ public class ScoreField extends CustomField<Integer> {
 
     RadioButtonGroup<Integer> score = new RadioButtonGroup<>("Score:", scoreValues);
 
+    public ScoreField(String caption) {
+        setCaption(caption);
+    }
+
     @Override
     protected Component initContent() {
         score.setStyleName(ValoTheme.OPTIONGROUP_HORIZONTAL);

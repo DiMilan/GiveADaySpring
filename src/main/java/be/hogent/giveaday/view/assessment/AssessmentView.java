@@ -1,7 +1,11 @@
 package be.hogent.giveaday.view.assessment;
 
+import be.hogent.giveaday.component.AssessmentForm;
 import be.hogent.giveaday.component.ScoreField;
+import be.hogent.giveaday.model.Assessment;
 import be.hogent.giveaday.model.DomainController;
+import be.hogent.giveaday.model.User;
+import com.vaadin.data.ValidationException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -21,14 +25,11 @@ public class AssessmentView extends VerticalLayout implements View {
 
     @PostConstruct
     private void init() {
-        AssessmentForm form = new AssessmentForm();
-        ScoreField q1 = form.addQuestion("enthousiasme en participatie");
-        ScoreField q2 = form.addQuestion("ideeën aanbrengen");
-        ScoreField q3 = form.addQuestion("inhouden correct en duidelijk kunnen uitleggen");
-        ScoreField q4 = form.addQuestion("groep organiseren en sturen");
-        ScoreField q5 = form.addQuestion("precisie en nauwkeurigheid");
-        ScoreField q6 = form.addQuestion("afspraken respecteren");
+        Assessment assessment = new Assessment();
 
+        assessment.setTargetUser(new User("voornaam", "naam"));
+
+        AssessmentForm form = new AssessmentForm(assessment);
         addComponent(form);
 //        setExpandRatio(form, 1.0f);
 
@@ -37,6 +38,15 @@ public class AssessmentView extends VerticalLayout implements View {
 
 //        save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
 //        cancel.setStyleName(ValoTheme.BUTTON_DANGER);
+
+        save.addClickListener(clickEvent -> {
+            try {
+                form.commit();
+            } catch (ValidationException e) {
+                Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
+            }
+
+        });
 
         HorizontalLayout actions = new HorizontalLayout(save, cancel);
 
