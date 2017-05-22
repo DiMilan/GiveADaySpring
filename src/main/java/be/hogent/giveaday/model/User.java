@@ -1,6 +1,7 @@
 package be.hogent.giveaday.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 @Entity
@@ -9,7 +10,7 @@ import java.util.List;
         @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u"),
         @NamedQuery(name = "User.findByName", query = "SELECT u FROM User u WHERE u.username = :name")
 })
-public class User {
+public class User implements Serializable {
 
     @Id
     @Column(name = "user_id")
