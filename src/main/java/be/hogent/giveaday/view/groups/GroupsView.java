@@ -40,7 +40,9 @@ public class GroupsView extends VerticalLayout implements View {
     private void init() {
         // Init UI here
 
-        setSizeFull();
+        setWidth(100, Unit.PERCENTAGE);
+        setSpacing(true);
+
         currentUser = domainController.getCurrentUser();
          currentGroup= currentUser.getGroup();
          groupMembers= currentGroup.getUsers();

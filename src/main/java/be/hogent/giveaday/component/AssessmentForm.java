@@ -6,14 +6,12 @@ import be.hogent.giveaday.model.User;
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
-import com.vaadin.ui.FormLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Notification;
+import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
 import org.vaadin.valerrdisp.ValidationErrorDisplay;
 import org.vaadin.valerrdisp.client.ErrorMessagePlacement;
 
-public class AssessmentForm extends FormLayout {
+public class AssessmentForm extends CustomComponent {
 
     public static final String QUESTION_1 = "enthousiasme en participatie";
     public static final String QUESTION_2 = "ideeën aanbrengen";
@@ -23,8 +21,6 @@ public class AssessmentForm extends FormLayout {
     public static final String QUESTION_6 = "afspraken respecteren";
 
     private final Binder<Assessment> binder = new Binder<>(Assessment.class);
-
-    private final Label user = new Label();
 
     private final ScoreField q1 = new ScoreField(QUESTION_1);
     private final ScoreField q2 = new ScoreField(QUESTION_2);
@@ -51,12 +47,26 @@ public class AssessmentForm extends FormLayout {
     }
 
     private void initForm() {
-        setStyleName(ValoTheme.FORMLAYOUT_LIGHT);
-        setMargin(false);
+        Label user = new Label(assessment.getTargetUser().getName());
 
-        user.setStyleName(ValoTheme.LABEL_H2);
+        user.setStyleName(ValoTheme.LABEL_HUGE);
 
-        addComponents(user, q1, q2, q3, q4, q5, q6);
+        FormLayout form = new FormLayout(q1, q2, q3, q4, q5, q6);
+
+        form.setStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+        form.addStyleName(ValoTheme.LAYOUT_WELL);
+        form.setMargin(false);
+
+        CssLayout formLayout = new CssLayout(form);
+
+        formLayout.setStyleName(ValoTheme.LAYOUT_WELL);
+
+        VerticalLayout layout = new VerticalLayout(user, formLayout);
+
+        layout.setSpacing(true);
+        layout.setMargin(false);
+
+        setCompositionRoot(layout);
     }
 
     private void initBindings() {
@@ -68,8 +78,6 @@ public class AssessmentForm extends FormLayout {
         binder.forField(q6).asRequired("Required").bind(Assessment::getVraag6, Assessment::setVraag6);
 
         binder.setBean(assessment);
-
-        user.setValue(assessment.getTargetUser().getName());
     }
 
     public BinderValidationStatus<Assessment> validate() {
