@@ -32,7 +32,7 @@ public class User implements Serializable {
     @ManyToOne
     @JoinColumn(name = "LectorUserId")
     private User lectorUser;
-    @OneToMany(mappedBy = "lectorUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "lectorUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> students;
 
     @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
@@ -93,8 +93,6 @@ public class User implements Serializable {
         assessment.setGroup(getGroup());
         assessment.setSourceUser(this);
         assessments.add(assessment);
-
-
     }
 
 
