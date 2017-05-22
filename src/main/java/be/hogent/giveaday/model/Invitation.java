@@ -4,22 +4,17 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "user_groups")
-@IdClass(InvitationId.class)
 public class Invitation {
 
-    @Id
-    @Column(name = "UserId")
-    private String userId;
-    @Id
-    @Column(name = "GroupId")
-    private String groupId;
+    @EmbeddedId
+    InvitationId id;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "UserId", referencedColumnName = "user_id")
+    @JoinColumn(name = "UserId")
     private User user;
 
     @ManyToOne
-    @PrimaryKeyJoinColumn(name = "GroupId", referencedColumnName = "GroupName")
+    @JoinColumn(name = "GroupId")
     private Group group;
 
     @Column(name = "Status")

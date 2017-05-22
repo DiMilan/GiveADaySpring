@@ -1,10 +1,12 @@
 package be.hogent.giveaday.model;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
  * Key for invitation (since it is a combination of 2 ids)
  */
+@Embeddable
 class InvitationId implements Serializable {
     private String userId;
     private String groupId;

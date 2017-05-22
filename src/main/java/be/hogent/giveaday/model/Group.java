@@ -38,7 +38,7 @@ public class Group {
     private String companyContactEmail;
     @Column(name = "CompanyContactTitle")
     private String companyContactTitle;
-    @OneToMany(mappedBy = "group", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "group", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Invitation> invitations;
     @Column(name = "GroupState")
     private int stateType;
