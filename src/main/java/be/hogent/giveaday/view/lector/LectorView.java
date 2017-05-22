@@ -2,6 +2,7 @@ package be.hogent.giveaday.view.lector;
 
 
 import be.hogent.giveaday.component.AssessmentForm;
+import be.hogent.giveaday.component.ScoreLabel;
 import be.hogent.giveaday.model.Assessment;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.Group;
@@ -12,15 +13,13 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
+import jdk.nashorn.internal.runtime.Debug;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Collection;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 //import org.springframework.security.core.userdetails.User;
@@ -44,7 +43,7 @@ public class LectorView extends VerticalLayout implements View {
         setSpacing(true);
         User currentUser = domainController.getCurrentUser();
         List<User> studenten = currentUser.getStudents();
-        Set<Group> lectorGroups = studenten.stream().map(user -> user.getGroup()).distinct().collect(Collectors.toSet());
+        Set<Group> lectorGroups = studenten.stream().map(user -> user.getGroup()).distinct().filter(group -> group != null).collect(Collectors.toSet());
 
 
         //Label groupNameL = new Label(currentGroup.getGroupName());
@@ -55,11 +54,47 @@ public class LectorView extends VerticalLayout implements View {
         HorizontalLayout actions = new HorizontalLayout(cancel);
 
         VerticalLayout layout = new VerticalLayout();
-        for(Group lectorGroup : lectorGroups) {
-            addComponent(new Label (lectorGroup.getGroupName()));
-            //.setStyleName(ValoTheme.LABEL_H1)
-            //Button view[groupLector.getGroupName()] = new Button("Check Assessments");
-            //addComponent(view[groupLector.getGroupName()]);
+
+        if (lectorGroups.size() == 0) {
+            addComponent(new Label ("No groups found!"));
+        }
+        else {
+
+            for (Group lectorGroup : lectorGroups) {
+                Set<List<Assessment>> currentAssessments = lectorGroup.getUsers().stream().map(user -> user.getAssessments()).collect(Collectors.toSet());
+                Set<Assessment> currentAssessmentsFlat = currentAssessments.stream().flatMap(List::stream).collect(Collectors.toSet());
+                Set<User> currentUsers = lectorGroup.getUsers().stream().collect(Collectors.toSet());
+
+                System.out.println(Arrays.toString(lectorGroups.toArray()));
+
+                addComponent(new Label(lectorGroup.getGroupName()));
+
+                for(User assessedUser : currentUsers) {
+                    Set<Assessment> currentUserAssessments = currentAssessmentsFlat.stream().filter(assessment -> assessment.getTargetUser() == assessedUser).filter(assessment -> assessment != null).collect(Collectors.toSet());
+                    if (currentUserAssessments.size() == 0) {
+                        System.out.println("No assessments for this user");
+                        addComponent(new ScoreLabel(assessedUser.getName()+": No assessments yet."));
+                    } else {
+                        System.out.println("Current Assessments filtered by this user");
+                        System.out.println(Arrays.toString(currentAssessments.toArray()));
+                        Double g1Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag1()).average().getAsDouble();
+                        Double g2Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag2()).average().getAsDouble();
+                        Double g3Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag3()).average().getAsDouble();
+                        Double g4Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag4()).average().getAsDouble();
+                        Double g5Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag5()).average().getAsDouble();
+                        Double g6Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag6()).average().getAsDouble();
+                        addComponent(new ScoreLabel("--> Enthousiasme en participatie: "+g1Score));
+                        addComponent(new ScoreLabel("--> Ideeën aanbrengen: "+g2Score));
+                        addComponent(new ScoreLabel("--> Inhouden correct en duidelijk kunnen uitleggen: "+g3Score));
+                        addComponent(new ScoreLabel("--> Groep organiseren en sturen: "+g4Score));
+                        addComponent(new ScoreLabel("--> Precisie en nauwkeurigheid: "+g5Score));
+                        addComponent(new ScoreLabel("--> Afspraken respecteren: "+g6Score));
+                    }
+                }
+                //.setStyleName(ValoTheme.LABEL_H1)
+                //Button view[lectorGroup] = new Button("Check Assessments");
+                //addComponent(view[groupLector.getGroupName()]);
+            }
         }
 
 
@@ -70,6 +105,7 @@ public class LectorView extends VerticalLayout implements View {
         footer.setWidth(100, Unit.PERCENTAGE);
         footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
 
+        addComponent(layout);
         addComponent(footer);
     }
 
