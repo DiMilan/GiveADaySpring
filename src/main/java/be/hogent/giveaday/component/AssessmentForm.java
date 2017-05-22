@@ -1,15 +1,12 @@
 package be.hogent.giveaday.component;
 
 import be.hogent.giveaday.model.Assessment;
-import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.User;
 import com.vaadin.data.Binder;
 import com.vaadin.data.BinderValidationStatus;
 import com.vaadin.data.ValidationException;
 import com.vaadin.ui.*;
 import com.vaadin.ui.themes.ValoTheme;
-import org.vaadin.valerrdisp.ValidationErrorDisplay;
-import org.vaadin.valerrdisp.client.ErrorMessagePlacement;
 
 public class AssessmentForm extends CustomComponent {
 

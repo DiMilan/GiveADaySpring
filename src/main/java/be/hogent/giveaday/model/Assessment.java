@@ -44,6 +44,7 @@ public class Assessment {
     @Column(name = "Vraag6")
     private Integer vraag6;
 
+
     public Group getGroupName(){return groupName;}
     private void setGroupName(Group groupName){this.groupName = groupName;}
 

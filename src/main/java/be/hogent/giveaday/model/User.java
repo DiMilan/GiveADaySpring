@@ -34,6 +34,9 @@ public class User {
     @OneToMany(mappedBy = "lectorUser")
     private List<User> students;
 
+    @OneToMany(mappedBy = "sourceUser")
+    private List<Assessment> assessments;
+
     //constructor because hibernate
     public User() {
     }
@@ -79,4 +82,18 @@ public class User {
         this.firstName = firstName;
         this.familyName = familyName;
     }
+
+
+    public List<Assessment> getAssessments() {
+        return assessments;
+    }
+
+    public void addAssessments(Assessment assessment){
+
+        assessment.setSourceUser(this);
+        assessments.add(assessment);
+
+    }
+
+
 }
