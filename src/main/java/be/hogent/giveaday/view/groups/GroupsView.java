@@ -1,20 +1,22 @@
 package be.hogent.giveaday.view.groups;
 
+
 import be.hogent.giveaday.component.AssessmentForm;
+import be.hogent.giveaday.model.Assessment;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.Group;
-import be.hogent.giveaday.model.User;
 import com.vaadin.data.ValidationException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
-import java.util.Iterator;
 import java.util.Collection;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 //import org.springframework.security.core.userdetails.User;
 
@@ -25,7 +27,7 @@ public class GroupsView extends VerticalLayout implements View {
     public static final String VIEW_NAME = "groups";
 
     //hier wordt de ingelogde user opgehaald en in sprinUser gestoken
-    private org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    private org.springframework.security.core.userdetails.User springUser = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     //naam van springUser wordt opgehaald als String
     private String name = springUser.getUsername(); //get logged in username
 
@@ -36,6 +38,7 @@ public class GroupsView extends VerticalLayout implements View {
     @Autowired
     private DomainController domainController;
 
+
     @PostConstruct
     private void init() {
         // Init UI here
@@ -44,46 +47,63 @@ public class GroupsView extends VerticalLayout implements View {
         setSpacing(true);
 
         currentUser = domainController.getCurrentUser();
-         currentGroup= currentUser.getGroup();
-         groupMembers= currentGroup.getUsers();
-        for (be.hogent.giveaday.model.User user : groupMembers )
-        {
-
-        AssessmentForm form = new AssessmentForm(user);
-        addComponent(form);
-
-        //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
+        currentGroup = currentUser.getGroup();
+        groupMembers = currentGroup.getUsers();
 
 
-            Button save = new Button("Submit");
+        Label groupNameL = new Label(currentGroup.getGroupName());
+        addComponent(groupNameL);
+        groupNameL.setStyleName(ValoTheme.LABEL_H1);
 
 
-//        save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
-//        cancel.setStyleName(ValoTheme.BUTTON_DANGER);
+        Button save = new Button("Submit");
 
-            save.addClickListener(clickEvent -> {
-                try {
-                    form.commit();
-                } catch (ValidationException e) {
-                    Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
-                }
+        if (CollectionUtils.isEmpty(currentUser.getAssessments())) {
 
-            });
+            for (be.hogent.giveaday.model.User user : groupMembers) {
 
-            HorizontalLayout actions = new HorizontalLayout(save);
+                AssessmentForm form = new AssessmentForm(user);
+                addComponent(form);
 
-            actions.setSpacing(true);
-
-            HorizontalLayout footer = new HorizontalLayout(actions);
-
-            footer.setWidth(100, Unit.PERCENTAGE);
-            footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
-
-            addComponent(footer);
+                //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
 
 
+                save.addClickListener(clickEvent -> {
+                    try {
+                        form.commit();
+                    } catch (ValidationException e) {
+                        Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
+                    }
 
-        }//END FOR LOOP
+                });
+
+                HorizontalLayout actions = new HorizontalLayout(save);
+
+                actions.setSpacing(true);
+
+                HorizontalLayout footer = new HorizontalLayout(actions);
+
+                footer.setWidth(100, Unit.PERCENTAGE);
+                footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
+
+                addComponent(footer);
+
+
+            }//END FOR LOOP
+        } //end IF EMPTY
+
+        else {
+
+
+            for (Assessment a : currentUser.getAssessments()) {
+
+                AssessmentForm form = new AssessmentForm(a);
+                addComponent(form);
+
+            }   //end for iterator
+
+            save.setEnabled(false);
+        } // end else
 
         Button cancel = new Button("Cancel");
         HorizontalLayout actions = new HorizontalLayout(cancel);
