@@ -3,6 +3,7 @@ package be.hogent.giveaday.view.evaluation;
 import be.hogent.giveaday.GoedBezigUI;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.view.assessment.AssessmentView;
+import be.hogent.giveaday.view.groups.GroupsView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -30,8 +31,17 @@ public class EvaluationView extends VerticalLayout implements View {
 
         assessment.addClickListener(clickEvent -> GoedBezigUI.showView(AssessmentView.VIEW_NAME));
 
+
+
+        Button groupMembers = new Button("Evaluation");
+
+        groupMembers.addClickListener(clickEvent -> GoedBezigUI.showView(GroupsView.VIEW_NAME));
+
         addComponent(assessment);
         setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
+
+        addComponent(groupMembers);
+        setComponentAlignment(groupMembers, Alignment.MIDDLE_CENTER);
     }
 
     @Override
