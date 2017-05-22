@@ -1,0 +1,4 @@
+INSERT INTO GoedBezigDB.dbo.assessment (GroupName, targetUser, sourceUser, vraag1, vraag2, vraag3, vraag4, vraag5, vraag6, comment) VALUES ('GroupHogent1', 'test@test.be', 'test@test.be', 10, 10, 10, 10, 10, 10, 'handmatig toegevoegd');
+INSERT INTO GoedBezigDB.dbo.assessment (GroupName, targetUser, sourceUser, vraag1, vraag2, vraag3, vraag4, vraag5, vraag6, comment) VALUES ('GroupHogent1', 'cursist@test.be', 'test@test.be', 10, 10, 10, 10, 10, 10, 'handmatig');
+INSERT INTO GoedBezigDB.dbo.assessment (GroupName, targetUser, sourceUser, vraag1, vraag2, vraag3, vraag4, vraag5, vraag6, comment) VALUES ('GroupHogent1', 'test@hogent.be', 'test@test.be', 10, 10, 10, 10, 10, 10, 'handmatig');
+INSERT INTO GoedBezigDB.dbo.assessment (GroupName, targetUser, sourceUser, vraag1, vraag2, vraag3, vraag4, vraag5, vraag6, comment) VALUES (null, null, null, null, null, null, null, null, null, null);
