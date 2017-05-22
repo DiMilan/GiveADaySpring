@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "select username,password, enabled from javaWeb_users where username=?")
                 .authoritiesByUsernameQuery(
                         "select username, role from javaWeb_user_roles where username=?");
+
     }
     /*
      OR
@@ -37,11 +38,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.httpBasic();
+        http.formLogin();
         http.csrf().disable();
         http
                 .authorizeRequests()
-                .antMatchers("/*").hasRole("USER");
+                .antMatchers("/").hasRole("USER")
+        ;
+
     }
 }
 
