@@ -2,15 +2,12 @@ package be.hogent.giveaday.model;
 
 import be.hogent.giveaday.data.GroupRepository;
 import be.hogent.giveaday.data.UserRepository;
-import com.sun.java.browser.plugin2.DOM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-
-import javax.servlet.http.HttpServletRequest;
 
 @Component
 public class DomainController {
@@ -31,5 +28,11 @@ public class DomainController {
         String username = userDetails.getUsername();
         log.debug("Retrieving user details (name = {})", username);
         return userRepository.getByName(username);
+    }
+
+    public void addAssessment(Assessment assessment) {
+        getCurrentUser().addAssessments(assessment);
+        //userRepository.update(getCurrentUser());
+
     }
 }

@@ -16,6 +16,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.ArrayList;
 import java.util.Collection;
 
 //import org.springframework.security.core.userdetails.User;
@@ -49,7 +50,7 @@ public class GroupsView extends VerticalLayout implements View {
         currentUser = domainController.getCurrentUser();
         currentGroup = currentUser.getGroup();
         groupMembers = currentGroup.getUsers();
-
+        Collection<AssessmentForm> forms = new ArrayList<>();
 
         Label groupNameL = new Label(currentGroup.getGroupName());
         addComponent(groupNameL);
@@ -59,35 +60,11 @@ public class GroupsView extends VerticalLayout implements View {
         Button save = new Button("Submit");
 
         if (CollectionUtils.isEmpty(currentUser.getAssessments())) {
-
             for (be.hogent.giveaday.model.User user : groupMembers) {
 
                 AssessmentForm form = new AssessmentForm(user);
                 addComponent(form);
-
-                //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
-
-
-                save.addClickListener(clickEvent -> {
-                    try {
-                        form.commit();
-                    } catch (ValidationException e) {
-                        Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
-                    }
-
-                });
-
-                HorizontalLayout actions = new HorizontalLayout(save);
-
-                actions.setSpacing(true);
-
-                HorizontalLayout footer = new HorizontalLayout(actions);
-
-                footer.setWidth(100, Unit.PERCENTAGE);
-                footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
-
-                addComponent(footer);
-
+                forms.add(form);
 
             }//END FOR LOOP
         } //end IF EMPTY
@@ -105,8 +82,41 @@ public class GroupsView extends VerticalLayout implements View {
             save.setEnabled(false);
         } // end else
 
-        Button cancel = new Button("Cancel");
-        HorizontalLayout actions = new HorizontalLayout(cancel);
+        //Button cancel = new Button("Cancel");
+
+        // submit event nog aan te passen !
+        save.addClickListener(clickEvent -> {
+            boolean isValid = true;
+
+            for( AssessmentForm f : forms ) {
+                if(f.validate().hasErrors()) isValid = false;
+            }//end for
+            if (!isValid) return;
+            try {
+                for( AssessmentForm f : forms ) {
+
+                    f.commit();
+                }
+            } catch (ValidationException e) {
+                Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
+                return;
+            }
+
+            for( AssessmentForm f : forms){
+
+                domainController.addAssessment(f.getAssessment());
+            }
+            for( AssessmentForm f : forms){
+
+                f.setEnabled(false);
+
+            }
+
+            save.setEnabled(false);
+        }
+        ); // end clickEvent
+
+        HorizontalLayout actions = new HorizontalLayout(save);
 
         actions.setSpacing(true);
 

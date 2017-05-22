@@ -76,4 +76,7 @@ public class Assessment {
     public Integer getVraag6() {return vraag6;}
     public void setVraag6(Integer vraag6){ this.vraag6 = vraag6;}
 
+    public void setGroup(Group group) {
+        this.groupName = group;
+    }
 }

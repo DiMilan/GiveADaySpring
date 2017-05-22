@@ -7,4 +7,6 @@ import be.hogent.giveaday.model.User;
  */
 public interface UserRepository {
     User getByName(String username);
+
+    void update(User currentUser);
 }

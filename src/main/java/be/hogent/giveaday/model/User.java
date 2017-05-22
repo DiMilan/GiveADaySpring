@@ -34,7 +34,7 @@ public class User {
     @OneToMany(mappedBy = "lectorUser")
     private List<User> students;
 
-    @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     private List<Assessment> assessments;
 
     //constructor because hibernate
@@ -89,9 +89,10 @@ public class User {
     }
 
     public void addAssessments(Assessment assessment){
-
+        assessment.setGroup(getGroup());
         assessment.setSourceUser(this);
         assessments.add(assessment);
+
 
     }
 

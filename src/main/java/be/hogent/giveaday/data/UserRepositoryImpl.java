@@ -25,4 +25,13 @@ public class UserRepositoryImpl implements UserRepository {
         query.setParameter("name", username);
         return query.getSingleResult();
     }
+
+    public void update(User user){
+
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
+        entityManager.refresh(user);
+
+    }
 }
