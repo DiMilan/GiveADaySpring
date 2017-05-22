@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
 
 import javax.sql.DataSource;
 
@@ -23,26 +24,22 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authoritiesByUsernameQuery(
                         "select username, role from javaWeb_user_roles where username=?");
 
+        auth.inMemoryAuthentication()
+                .withUser("username").password("123456").roles("USER");
+
     }
-    /*
-     OR
-     @Autowired
-     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-     auth
-     .inMemoryAuthentication()
-     .withUser("user").password("user").roles("USER").and()
-     .withUser("admin").password("admin").roles("USER", "ADMIN");
-     }
-     */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.formLogin();
-        http.csrf().disable();
+        http.formLogin()
+                .loginPage("/login").permitAll()
+        ;
+        http.csrf().disable().exceptionHandling().authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")).accessDeniedPage("/accessDenied");
         http
                 .authorizeRequests()
-                .antMatchers("/").hasRole("USER")
+                .antMatchers("/VAADIN/**", "/PUSH/**", "/UIDL/**", "/login", "/login/**", "/error/**", "/accessDenied/**", "/vaadinServlet/**").permitAll()
+                .antMatchers("/**").permitAll()
         ;
 
     }

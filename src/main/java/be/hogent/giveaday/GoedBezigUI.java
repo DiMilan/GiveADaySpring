@@ -1,6 +1,7 @@
 package be.hogent.giveaday;
 
 import be.hogent.giveaday.model.DomainController;
+import be.hogent.giveaday.config.Authentication;
 import be.hogent.giveaday.view.login.LoginView;
 import com.vaadin.annotations.Theme;
 import com.vaadin.navigator.View;
@@ -14,8 +15,6 @@ import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-import javax.servlet.http.HttpSession;
-
 @Theme("giveaday")
 @SpringUI
 @SpringViewDisplay
@@ -24,11 +23,14 @@ public class GoedBezigUI extends UI implements ViewDisplay {
     @Autowired
     private DomainController domainController;
 
+    public static Authentication AUTH;
+
     private Button logoutButton;
     private Panel springViewDisplay;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+        AUTH = new Authentication();
         final VerticalLayout root = new VerticalLayout();
         root.setSizeFull();
         setContent(root);

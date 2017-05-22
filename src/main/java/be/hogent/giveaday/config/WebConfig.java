@@ -30,4 +30,20 @@ public class WebConfig extends WebMvcConfigurerAdapter  {
         driverManagerDataSource.setPassword("Een goede admin deelt nooit zijn wachtwoord!");
         return driverManagerDataSource;
     }
+
+//    @Override
+//    public void addViewControllers(ViewControllerRegistry registry) {
+//        registry.addViewController("/login").setViewName("login");
+//        registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
+//    }
+
+//    @Bean
+//    public ViewResolver viewResolver() {
+//
+//        InternalResourceViewResolver resolver
+//                = new InternalResourceViewResolver();
+//        resolver.setPrefix("/views/html/");
+//        resolver.setSuffix(".html");
+//        return resolver;
+//    }
 }

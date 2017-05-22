@@ -21,8 +21,8 @@ public class User {
     @Column(name = "family_name")
     private String familyName;
 
-    @Column(name = "PasswordHash")
-    private String passwordHash;
+    @Column(name = "JavaPassword")
+    private String password;
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Invitation> invitations;
     //@ManyToOne
@@ -63,9 +63,6 @@ public class User {
     //    return organization;
     //}
 
-    String getPasswordHash() {
-        return passwordHash;
-    }
 
     List<User> getStudents() {
         return students;
@@ -78,5 +75,13 @@ public class User {
     public User(String firstName, String familyName) {
         this.firstName = firstName;
         this.familyName = familyName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

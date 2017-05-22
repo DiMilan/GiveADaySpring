@@ -1,6 +1,7 @@
 package be.hogent.giveaday.data;
 
 import be.hogent.giveaday.model.User;
+import org.hibernate.jpa.internal.EntityManagerImpl;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
