@@ -4,11 +4,11 @@ import be.hogent.giveaday.component.AssessmentForm;
 import be.hogent.giveaday.model.DomainController;
 import be.hogent.giveaday.model.Group;
 import be.hogent.giveaday.model.User;
+import com.vaadin.data.ValidationException;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -55,9 +55,47 @@ public class GroupsView extends VerticalLayout implements View {
         //setComponentAlignment(assessment, Alignment.MIDDLE_CENTER);
 
 
-        }
+            Button save = new Button("Submit");
 
 
+//        save.setStyleName(ValoTheme.BUTTON_FRIENDLY);
+//        cancel.setStyleName(ValoTheme.BUTTON_DANGER);
+
+            save.addClickListener(clickEvent -> {
+                try {
+                    form.commit();
+                } catch (ValidationException e) {
+                    Notification.show("Validation failed!", Notification.Type.ERROR_MESSAGE);
+                }
+
+            });
+
+            HorizontalLayout actions = new HorizontalLayout(save);
+
+            actions.setSpacing(true);
+
+            HorizontalLayout footer = new HorizontalLayout(actions);
+
+            footer.setWidth(100, Unit.PERCENTAGE);
+            footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
+
+            addComponent(footer);
+
+
+
+        }//END FOR LOOP
+
+        Button cancel = new Button("Cancel");
+        HorizontalLayout actions = new HorizontalLayout(cancel);
+
+        actions.setSpacing(true);
+
+        HorizontalLayout footer = new HorizontalLayout(actions);
+
+        footer.setWidth(100, Unit.PERCENTAGE);
+        footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
+
+        addComponent(footer);
     }
 
     @Override
