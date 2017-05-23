@@ -3,6 +3,7 @@ package be.hogent.giveaday.data;
 import be.hogent.giveaday.model.User;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,6 +14,8 @@ import javax.persistence.TypedQuery;
  */
 @Repository
 public class UserRepositoryImpl extends SimpleJpaRepository<User, Integer> implements UserRepository {
+
+
 
     @PersistenceContext
     private EntityManager entityManager;

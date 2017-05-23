@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 @Component
 public class DomainController {
@@ -31,8 +32,9 @@ public class DomainController {
     }
 
     public void addAssessment(Assessment assessment) {
-        getCurrentUser().addAssessments(assessment);
-        userRepository.update(getCurrentUser());
+        User loggedUser = getCurrentUser();
+        loggedUser.addAssessments(assessment);
+        userRepository.save(loggedUser);
 
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Table(name = "assessment")
 public class Assessment {
 
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @Column(name="id")
     private int id;
