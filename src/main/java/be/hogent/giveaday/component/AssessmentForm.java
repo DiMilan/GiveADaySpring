@@ -28,8 +28,10 @@ public class AssessmentForm extends CustomComponent {
 
     private final Assessment assessment;
 
-    public AssessmentForm(User user) {
+    public AssessmentForm(User source, User user) {
         this.assessment = new Assessment();
+        this.assessment.setSourceUser(source);
+        this.assessment.setGroup(source.getGroup());
         this.assessment.setTargetUser(user);
 
         initForm();
@@ -41,6 +43,7 @@ public class AssessmentForm extends CustomComponent {
 
         initForm();
         initBindings();
+        setEnabled(false);
     }
 
     private void initForm() {

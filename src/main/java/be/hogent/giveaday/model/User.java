@@ -35,7 +35,7 @@ public class User implements Serializable {
     @OneToMany(mappedBy = "lectorUser", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> students;
 
-    @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "sourceUser", fetch = FetchType.EAGER)
     private List<Assessment> assessments;
 
     //constructor because hibernate
@@ -95,5 +95,18 @@ public class User implements Serializable {
         assessments.add(assessment);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
 
+        User user = (User) o;
+
+        return id.equals(user.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
 }

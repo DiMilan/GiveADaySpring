@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
  * User repository implementation
  */
 @Repository
-public class UserRepositoryImpl extends SimpleJpaRepository<User, Integer> implements UserRepository {
+public class UserRepositoryImpl extends SimpleJpaRepository<User, String> implements UserRepository {
 
 
 
@@ -30,7 +30,12 @@ public class UserRepositoryImpl extends SimpleJpaRepository<User, Integer> imple
     public User getByName(String username) {
         TypedQuery<User> query = entityManager.createNamedQuery("User.findByName", User.class);
         query.setParameter("name", username);
-        return query.getSingleResult();
+        User user = query.getSingleResult();
+        if (user != null) {
+            return findOne(user.getId());
+        } else {
+            return null;
+        }
     }
 
     public void update(User user){

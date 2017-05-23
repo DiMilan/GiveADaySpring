@@ -62,7 +62,7 @@ public class GroupsView extends VerticalLayout implements View {
         if (CollectionUtils.isEmpty(currentUser.getAssessments())) {
             for (be.hogent.giveaday.model.User user : groupMembers) {
 
-                AssessmentForm form = new AssessmentForm(user);
+                AssessmentForm form = new AssessmentForm(currentUser, user);
                 addComponent(form);
                 forms.add(form);
 

@@ -1,6 +1,7 @@
 package be.hogent.giveaday.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Milan on 18/05/2017.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "assessment")
-public class Assessment {
+public class Assessment implements Serializable {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
@@ -16,17 +17,17 @@ public class Assessment {
     private int id;
 
 //    @Column(name = "GroupNaam")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name = "GroupName", referencedColumnName = "GroupName")
     private Group groupName;
 
 //    @Column(name = "SourceUser")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="SourceUser", referencedColumnName = "user_id")
     private User sourceUser;
 
 //    @Column(name = "TargetUser")
-    @ManyToOne(cascade = CascadeType.PERSIST)
+    @ManyToOne
     @JoinColumn(name="TargetUser", referencedColumnName = "user_id")
     private User targetUser;
 

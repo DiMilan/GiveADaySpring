@@ -1,5 +1,6 @@
 package be.hogent.giveaday.model;
 
+import be.hogent.giveaday.data.AssessmentRepository;
 import be.hogent.giveaday.data.GroupRepository;
 import be.hogent.giveaday.data.UserRepository;
 import org.slf4j.Logger;
@@ -20,6 +21,9 @@ public class DomainController {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AssessmentRepository assessmentRepository;
+
     public void logout() {
         //ttpServletRequest.logout();
     }
@@ -32,9 +36,7 @@ public class DomainController {
     }
 
     public void addAssessment(Assessment assessment) {
-        User loggedUser = getCurrentUser();
-        loggedUser.addAssessments(assessment);
-        userRepository.save(loggedUser);
-
+        log.info("Adding assessment");
+        assessmentRepository.save(assessment);
     }
 }
