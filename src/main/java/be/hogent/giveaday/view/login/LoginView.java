@@ -2,7 +2,7 @@ package be.hogent.giveaday.view.login;
 
 import be.hogent.giveaday.GoedBezigUI;
 import be.hogent.giveaday.model.DomainController;
-import be.hogent.giveaday.view.evaluation.EvaluationView;
+import be.hogent.giveaday.view.main.MainView;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
@@ -27,7 +27,7 @@ public class LoginView extends VerticalLayout implements View {
         setSizeFull();
         Button loginButton = new Button("Login");
         // TODO show correct view per user
-        loginButton.addClickListener(clickEvent -> GoedBezigUI.showView(EvaluationView.VIEW_NAME));
+        loginButton.addClickListener(clickEvent -> GoedBezigUI.showView(MainView.VIEW_NAME));
         addComponent(loginButton);
         setComponentAlignment(loginButton, Alignment.MIDDLE_CENTER);
     }
