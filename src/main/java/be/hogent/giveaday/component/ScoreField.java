@@ -33,4 +33,12 @@ public class ScoreField extends CustomField<Integer> {
     public Integer getValue() {
         return score.getValue();
     }
+
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        this.setReadOnly(!enabled);
+        score.setEnabled(enabled);
+        score.setReadOnly(!enabled);
+    }
 }

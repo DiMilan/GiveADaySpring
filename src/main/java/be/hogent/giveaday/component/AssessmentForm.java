@@ -46,10 +46,22 @@ public class AssessmentForm extends CustomComponent {
         setEnabled(false);
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        q1.setEnabled(enabled);
+        q2.setEnabled(enabled);
+        q3.setEnabled(enabled);
+        q4.setEnabled(enabled);
+        q5.setEnabled(enabled);
+        q6.setEnabled(enabled);
+        binder.setReadOnly(!enabled);
+    }
+
     private void initForm() {
         Label user = new Label(assessment.getTargetUser().getName());
 
-        user.setStyleName(ValoTheme.LABEL_HUGE);
+        user.setStyleName(ValoTheme.LABEL_H4);
 
         FormLayout form = new FormLayout(q1, q2, q3, q4, q5, q6);
 
@@ -63,7 +75,7 @@ public class AssessmentForm extends CustomComponent {
 
         VerticalLayout layout = new VerticalLayout(user, formLayout);
 
-        layout.setSpacing(true);
+        layout.setSpacing(false);
         layout.setMargin(false);
 
         setCompositionRoot(layout);

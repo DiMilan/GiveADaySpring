@@ -1,5 +1,6 @@
 package be.hogent.giveaday.component;
 
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.themes.ValoTheme;
@@ -11,9 +12,10 @@ import java.awt.*;
  */
 public class ScoreLabel extends com.vaadin.ui.Label {
 
-    public ScoreLabel(String string) {
-        super(string);
-        this.addStyleName(ValoTheme.LABEL_LIGHT);
-        this.addStyleName(ValoTheme.LABEL_SMALL);
+    public ScoreLabel(String caption, Double value) {
+        super(Double.toString(value) + "&nbsp;");
+        this.setContentMode(ContentMode.HTML);
+        this.setCaption(caption);
+        this.addStyleName(ValoTheme.LABEL_BOLD);
     }
 }

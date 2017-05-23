@@ -10,6 +10,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.spring.annotation.SpringView;
 import com.vaadin.ui.*;
+import com.vaadin.ui.themes.ValoTheme;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -34,16 +35,11 @@ public class LectorView extends VerticalLayout implements View {
         // Init UI here
 
         setWidth(100, Unit.PERCENTAGE);
-        setSpacing(true);
+        setSpacing(false);
+
         User currentUser = domainController.getCurrentUser();
         List<User> studenten = currentUser.getStudents();
         Set<Group> lectorGroups = studenten.stream().map(user -> user.getGroup()).distinct().filter(group -> group != null).collect(Collectors.toSet());
-
-
-        Button cancel = new Button("Cancel");
-        HorizontalLayout actions = new HorizontalLayout(cancel);
-
-        VerticalLayout layout = new VerticalLayout();
 
         if (lectorGroups.size() == 0) {
             addComponent(new Label ("No groups found!"));
@@ -57,16 +53,27 @@ public class LectorView extends VerticalLayout implements View {
 
                 //System.out.println(Arrays.toString(lectorGroups.toArray()));
 
-                addComponent(new Label(lectorGroup.getGroupName()));
+                Label groupLabel = new Label(lectorGroup.getGroupName());
+                groupLabel.setStyleName(ValoTheme.LABEL_H2);
+                addComponent(groupLabel);
 
                 for(User assessedUser : currentUsers) {
+
+                    Label userLabel = new Label(assessedUser.getName());
+                    userLabel.setStyleName(ValoTheme.LABEL_H4);
+                    addComponent(userLabel);
+
+                    FormLayout form = new FormLayout();
+                    form.setStyleName(ValoTheme.FORMLAYOUT_LIGHT);
+                    form.setMargin(false);
+
                     Set<Assessment> currentUserAssessments = currentAssessmentsFlat.stream()
                             .filter(assessment -> assessment.getTargetUser() == assessedUser)
                             .filter(assessment -> assessment != null).collect(Collectors.toSet());
                     if (currentUserAssessments.size() == 0) {
                         //System.out.println("No assessments for this user");
                         //System.out.println(assessedUser.getGroup().toString());
-                        addComponent(new ScoreLabel(assessedUser.getName()+": No assessments yet."));
+                        form.addComponent(new Label("No assessments yet."));
                     } else {
                         Double g1Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag1()).average().getAsDouble();
                         Double g2Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag2()).average().getAsDouble();
@@ -74,27 +81,23 @@ public class LectorView extends VerticalLayout implements View {
                         Double g4Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag4()).average().getAsDouble();
                         Double g5Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag5()).average().getAsDouble();
                         Double g6Score = currentUserAssessments.stream().mapToDouble(assessment -> assessment.getVraag6()).average().getAsDouble();
-                        addComponent(new ScoreLabel("--> Enthousiasme en participatie: "+g1Score));
-                        addComponent(new ScoreLabel("--> Ideeën aanbrengen: "+g2Score));
-                        addComponent(new ScoreLabel("--> Inhouden correct en duidelijk kunnen uitleggen: "+g3Score));
-                        addComponent(new ScoreLabel("--> Groep organiseren en sturen: "+g4Score));
-                        addComponent(new ScoreLabel("--> Precisie en nauwkeurigheid: "+g5Score));
-                        addComponent(new ScoreLabel("--> Afspraken respecteren: "+g6Score));
+                        form.addComponent(new ScoreLabel("Enthousiasme en participatie: ",g1Score));
+                        form.addComponent(new ScoreLabel("Ideeën aanbrengen: ",g2Score));
+                        form.addComponent(new ScoreLabel("Inhouden correct en duidelijk kunnen uitleggen: ",g3Score));
+                        form.addComponent(new ScoreLabel("Groep organiseren en sturen: ",g4Score));
+                        form.addComponent(new ScoreLabel("Precisie en nauwkeurigheid: ",g5Score));
+                        form.addComponent(new ScoreLabel("Afspraken respecteren: ",g6Score));
                     }
+
+                    Panel formLayout = new Panel(form);
+
+                    formLayout.setStyleName(ValoTheme.PANEL_WELL);
+                    formLayout.setWidthUndefined();
+
+                    addComponent(formLayout);
                 }
             }
         }
-
-
-        actions.setSpacing(true);
-
-        HorizontalLayout footer = new HorizontalLayout(actions);
-
-        footer.setWidth(100, Unit.PERCENTAGE);
-        footer.setComponentAlignment(actions, Alignment.MIDDLE_RIGHT);
-
-        addComponent(layout);
-        addComponent(footer);
     }
 
     @Override
