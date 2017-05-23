@@ -91,6 +91,7 @@ public class User implements Serializable {
 
     public void addAssessments(Assessment assessment){
         assessment.setGroup(getGroup());
+        assessment.setComment("Inserted by JPA");
         assessment.setSourceUser(this);
         assessments.add(assessment);
     }
