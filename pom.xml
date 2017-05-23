@@ -64,11 +64,6 @@
 			<artifactId>spring-security-web</artifactId>
 			<version>4.2.2.RELEASE</version>
 		</dependency>
-		<dependency>
-			<groupId>org.vaadin</groupId>
-			<artifactId>valerrdisp</artifactId>
-			<version>1.0.0</version>
-		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
